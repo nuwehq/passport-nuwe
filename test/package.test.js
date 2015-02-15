@@ -2,7 +2,7 @@
 
 var strategy = require('..');
 
-describe('passport-37signals', function() {
+describe('passport-nuwe', function() {
     
   it('should export Strategy constructor directly from package', function() {
     expect(strategy).to.be.a('function');

@@ -1,10 +1,11 @@
 var express = require('express')
+  , app = express()
   , passport = require('passport')
   , util = require('util')
-  , Thirty7SignalsStrategy = require('passport-37signals').Strategy;
+  , NuweStrategy = require('passport-nuwe').Strategy;
 
-var THIRTY7SIGNALS_CLIENT_ID = "--insert-37signals-client-id-here--"
-var THIRTY7SIGNALS_CLIENT_SECRET = "--insert-37signals-client-secret-here--";
+var Nuwe_CLIENT_ID = "<------NUWE_CLIENT_ID---------->"
+var Nuwe_CLIENT_SECRET = "<------NUWE_CLIENT_SECRET---------->";
 
 
 // Passport session setup.
@@ -12,7 +13,7 @@ var THIRTY7SIGNALS_CLIENT_SECRET = "--insert-37signals-client-secret-here--";
 //   serialize users into and deserialize users out of the session.  Typically,
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.  However, since this example does not
-//   have a database of user records, the complete 37signals profile is
+//   have a database of user records, the complete nuwe profile is
 //   serialized and deserialized.
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -23,32 +24,27 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
-// Use the Thirty7signalsStrategy within Passport.
+// Use the NuweStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and 37signals
+//   credentials (in this case, an accessToken, refreshToken, and nuwe
 //   profile), and invoke a callback with a user object.
-passport.use(new Thirty7SignalsStrategy({
-    clientID: THIRTY7SIGNALS_CLIENT_ID,
-    clientSecret: THIRTY7SIGNALS_CLIENT_SECRET,
-    callbackURL: "http://127.0.0.1:3000/auth/37signals/callback"
+passport.use(new NuweStrategy({
+    clientID: Nuwe_CLIENT_ID,
+    clientSecret: Nuwe_CLIENT_SECRET,
+    callbackURL: "http://127.0.0.1:3000/auth/nuwe/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
       
-      // To keep the example simple, the user's 37signals profile is returned to
+      // To keep the example simple, the user's nuwe profile is returned to
       // represent the logged-in user.  In a typical application, you would want
-      // to associate the 37signals account with a user record in your database,
+      // to associate the nuwe account with a user record in your database,
       // and return that user instead.
       return done(null, profile);
     });
   }
 ));
-
-
-
-
-var app = express.createServer();
 
 // configure Express
 app.configure(function() {
@@ -80,25 +76,25 @@ app.get('/login', function(req, res){
   res.render('login', { user: req.user });
 });
 
-// GET /auth/37signals
+// GET /auth/nuwe
 //   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in 37signals authentication will involve
-//   redirecting the user to 37signals.com.  After authorization, 37signals
-//   will redirect the user back to this application at /auth/37signals/callback
-app.get('/auth/37signals',
-  passport.authenticate('37signals'),
+//   request.  The first step in nuwe authentication will involve
+//   redirecting the user to nuwe.com.  After authorization, nuwe
+//   will redirect the user back to this application at /auth/nuwe/callback
+app.get('/auth/nuwe',
+  passport.authenticate('nuwe'),
   function(req, res){
-    // The request will be redirected to 37signals for authentication, so this
+    // The request will be redirected to nuwe for authentication, so this
     // function will not be called.
   });
 
-// GET /auth/37signals/callback
+// GET /auth/nuwe/callback
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-app.get('/auth/37signals/callback', 
-  passport.authenticate('37signals', { failureRedirect: '/login' }),
+app.get('/auth/nuwe/callback', 
+  passport.authenticate('nuwe', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
   });

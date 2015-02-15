@@ -2,13 +2,13 @@
 /* jshint expr: true */
 
 var chai = require('chai')
-  , Thirty7SignalsStrategy = require('../lib/strategy');
+  , NuweStrategy = require('../lib/strategy');
 
 
 describe('Strategy', function() {
     
   describe('using token endpoint that responds with non-standard error', function() {
-    var strategy = new Thirty7SignalsStrategy({
+    var strategy = new NuweStrategy({
         clientID: 'ABC123',
         clientSecret: 'secret'
       },
@@ -43,7 +43,7 @@ describe('Strategy', function() {
   });
   
   describe('using token endpoint that responds with standard error', function() {
-    var strategy = new Thirty7SignalsStrategy({
+    var strategy = new NuweStrategy({
         clientID: 'ABC123',
         clientSecret: 'secret'
       },

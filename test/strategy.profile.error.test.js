@@ -1,13 +1,13 @@
 /* global describe, it, expect, before */
 /* jshint expr: true */
 
-var Thirty7SignalsStrategy = require('../lib/strategy');
+var NuweStrategy = require('../lib/strategy');
 
 
 describe('Strategy#userProfile', function() {
     
   describe('handling API errors', function() {
-    var strategy =  new Thirty7SignalsStrategy({
+    var strategy =  new NuweStrategy({
         clientID: 'ABC123',
         clientSecret: 'secret'
       },
@@ -15,7 +15,7 @@ describe('Strategy#userProfile', function() {
   
     // mock
     strategy._oauth2.get = function(url, accessToken, callback) {
-      if (url != 'https://launchpad.37signals.com/authorization.json') { return callback(new Error('wrong url argument')); }
+      if (url != 'https://api.nuapi.co/authorization.json') { return callback(new Error('wrong url argument')); }
       if (accessToken != 'token') { return callback(new Error('wrong token argument')); }
     
       var body = '{"error":"OAuth token could not be verified. The internal checksum failed, so the token data was somehow mangled or tampered with."}';
@@ -40,7 +40,7 @@ describe('Strategy#userProfile', function() {
   });
   
   describe('handling malformed responses', function() {
-    var strategy =  new Thirty7SignalsStrategy({
+    var strategy =  new NuweStrategy({
         clientID: 'ABC123',
         clientSecret: 'secret'
       },
@@ -48,7 +48,7 @@ describe('Strategy#userProfile', function() {
   
     // mock
     strategy._oauth2.get = function(url, accessToken, callback) {
-      if (url != 'https://launchpad.37signals.com/authorization.json') { return callback(new Error('wrong url argument')); }
+      if (url != 'https://api.nuapi.co/authorization.json') { return callback(new Error('wrong url argument')); }
       if (accessToken != 'token') { return callback(new Error('wrong token argument')); }
     
       var body = 'Hello, world.';

@@ -1,12 +1,12 @@
 /* global describe, it, expect, before */
 /* jshint expr: true */
 
-var Thirty7SignalsStrategy = require('../lib/strategy');
+var NuweStrategy = require('../lib/strategy');
 
 
 describe('Strategy#userProfile', function() {
     
-  var strategy =  new Thirty7SignalsStrategy({
+  var strategy =  new NuweStrategy({
       clientID: 'ABC123',
       clientSecret: 'secret'
     },
@@ -14,7 +14,7 @@ describe('Strategy#userProfile', function() {
   
   // mock
   strategy._oauth2.get = function(url, accessToken, callback) {
-    if (url != 'https://launchpad.37signals.com/authorization.json') { return callback(new Error('wrong url argument')); }
+    if (url != 'https://api.nuapi.co/authorization.json') { return callback(new Error('wrong url argument')); }
     if (accessToken != 'token') { return callback(new Error('wrong token argument')); }
     
     var body = '{"expires_at":"2012-01-25T18:30:08Z","accounts":[{"name":"ACME Corp","href":"https://acmecorp.highrisehq.com","id":333,"product":"highrise"},{"name":"johndoe","href":"https://johndoe.backpackit.com","id":22222,"product":"backpack"},{"name":"ACME Corp","href":"https://acmecorp.basecamphq.com","id":1111111,"product":"basecamp"},{"name":"StealthBus","href":"https://stealthbus.basecamphq.com","id":1221222,"product":"basecamp"}],"identity":{"id":5555,"last_name":"Doe","email_address":"john.doe@example.com","first_name":"John"}}';
@@ -34,7 +34,7 @@ describe('Strategy#userProfile', function() {
     });
     
     it('should parse profile', function() {
-      expect(profile.provider).to.equal('37signals');
+      expect(profile.provider).to.equal('nuwe');
       
       expect(profile.id).to.equal('5555');
       expect(profile.displayName).to.equal('John Doe');

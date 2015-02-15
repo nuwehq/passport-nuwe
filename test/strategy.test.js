@@ -1,19 +1,19 @@
 /* global describe, it, expect */
 /* jshint expr: true */
 
-var Thirty7SignalsStrategy = require('../lib/strategy');
+var NuweStrategy = require('../lib/strategy');
 
 
 describe('Strategy', function() {
     
-  var strategy = new Thirty7SignalsStrategy({
+  var strategy = new NuweStrategy({
       clientID: 'ABC123',
       clientSecret: 'secret'
     },
     function() {});
     
-  it('should be named 37signals', function() {
-    expect(strategy.name).to.equal('37signals');
+  it('should be named nuwe', function() {
+    expect(strategy.name).to.equal('nuwe');
   });
   
   it('should add web_server to authorization params', function() {
