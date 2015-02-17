@@ -1,6 +1,6 @@
 {
   "name": "passport-nuwe",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Nuwe authentication strategy for Passport.",
   "keywords": [
     "passport",
